@@ -109,3 +109,5 @@
         isReady: isReady
     };
 })();
+
+var HTMLscore = '<h1 id="score">%data%</h1>';
