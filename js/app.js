@@ -33,21 +33,7 @@ Enemy.prototype.update = function(dt) {
     //the player clashes with enemy
     //if(this.x < player.x +  )
 };
-function checkCollisions(){
 
-allEnemies.forEach(function(enemy){
-if (player.y==enemy.y){
-
-    var distance = Math.abs(player.x - enemy.x);
-        if(distance <= 40){
-        player.score=0;
-        player.x = 200;
-        player.y=400;
-
-        }
-    };
-  });      
-};
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -67,7 +53,7 @@ var Player = function(){
 // This class requires an update(), r
 Player.prototype.update = function(){ 
 
-   if (player.y == -20 ) {
+   if (this.y == -20 ) {
    
     this.x = 200;
     this.y=400;
@@ -99,6 +85,23 @@ Player.prototype.update = function(){
 Player.prototype.render=function(){
 
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
+};
+
+//function checkCollisions(){
+Player.prototype.checkCollisions=function(){
+
+    allEnemies.forEach(function(enemy){
+    if (this.y==enemy.y){
+    var distance = Math.abs(this.x - enemy.x);
+        if(distance <= 40){
+            console.log("distance= "+distance);
+        this.score=0;
+        this.x = 200;
+        this.y=400;
+
+        }
+    };
+  });      
 };
 
 // a handleInput() method.
