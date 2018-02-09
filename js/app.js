@@ -25,13 +25,8 @@ Enemy.prototype.update = function(dt) {
     else
     {
        this.x = 0;
-       // console.log("this.x="+this.x);
     }
 
-    
-
-    //the player clashes with enemy
-    //if(this.x < player.x +  )
 };
 
 // Draw the enemy on the screen, required method for game
@@ -41,11 +36,10 @@ Enemy.prototype.render = function() {
 
 
 // Now write your own player class
-var Player = function(){
-
+var Player = function(x,y){
     this.sprite ='images/char-boy.png';
-    this.x = 200;
-    this.y = 400;
+    this.x = x;
+    this.y = y;
 };
 
 //update class to update player postion.
@@ -53,55 +47,28 @@ var Player = function(){
 // This class requires an update(), r
 Player.prototype.update = function(){ 
 
-   if (this.y == -20 ) {
-   
+   if (this.y == -20 ) { 
     this.x = 200;
     this.y=400;
     score = score + 1;
-
     //get out of the game
-
     if (score == 5) {
-
-        player.score=5;
-        player.x = 200;
-        player.y=400;
+        this.score=5;
+        this.x = 200;
+        this.y=400;
         document.getElementById('won').innerHTML ="You won";
         ctx.clearRect(0,0,canvas.width,canvas.height);
-        
-
-
     };
-
-   // var formattedScore = HTMLscore.replace("%data%", score);
-   // $("#score").append(formattedScore);
-
    document.getElementById('score').innerHTML =score;
-
+   }  
+   else if(this.x == -20 || this.x==420 || this.y==440){
+        this.x = 200;
+        this.y=400;
    }
-    
 };
 //render()
 Player.prototype.render=function(){
-
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
-};
-
-//function checkCollisions(){
-Player.prototype.checkCollisions=function(){
-
-    allEnemies.forEach(function(enemy){
-    if (this.y==enemy.y){
-    var distance = Math.abs(this.x - enemy.x);
-        if(distance <= 40){
-            console.log("distance= "+distance);
-        this.score=0;
-        this.x = 200;
-        this.y=400;
-
-        }
-    };
-  });      
 };
 
 // a handleInput() method.
@@ -128,9 +95,6 @@ Player.prototype.handleInput=function(direction){
         this.x=200;
         this.y=400;
     }
-
-
-
 };
 
 // Now instantiate your objects.
@@ -142,8 +106,7 @@ var enemy3 = new Enemy(200, 220);
 var allEnemies = [enemy1,enemy2,enemy3];
 
 // Place the player object in a variable called player
-var player = new Player();
-
+var player = new Player(200,400);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -154,6 +117,19 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+//function checkCollisions(){
+Player.prototype.checkCollisions=function(){
+    for (var i = allEnemies.length - 1; i >= 0; i--) {
+         if (this.y==allEnemies[i].y){
+        var distance = Math.abs(this.x - allEnemies[i].x);
+        if(distance <= 40){
+        this.score=0;
+        this.x = 200;
+       this.y=400;
+        };
+    };
+    }; 
+};
